@@ -23,5 +23,11 @@ def render_to_response(
     context: Optional[Dict[str, Any]] = None,
     request: Optional[HttpRequest] = None,
 ) -> HttpResponse:
+    if request is None:
+        import inspect
+        frame = inspect.currentframe().f_back
+        req = frame.f_locals.get("request")
+        if isinstance(req, HttpRequest):
+            request = req
     template = loader.get_template(template_name)
     return HttpResponse(template.render(context or {}, request))
