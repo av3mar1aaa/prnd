@@ -20,7 +20,7 @@
         <tr>
           <td class="text-center">{{ act.labname }}</td>
           <td class="text-center">{{ act.username }}</td>
-          <td>{{ act.actname }}</td>
+          <td>{{ act.actname|safe }}</td>
         </tr>
         {% endfor %}
       </tbody>

@@ -33,7 +33,7 @@
         {% for act in list %}
         <tr>
           <td><a href="{{ act.path }}">{{ forloop.counter }}</a></td>
-          <td>{{ act.html_str }}</td>
+          <td>{{ act.html_str|safe }}</td>
           <td class="text-center">{{ act.cost }}</td>
         </tr>
         {% endfor %}

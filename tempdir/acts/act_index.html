@@ -19,7 +19,7 @@
         {% for act in full_info_act_list %}
         <tr>
           <td class="text-center"><a href="{{ act.id }}">{{ forloop.counter }}</a></td>
-          <td>{{ act.html_str }}</td>
+          <td>{{ act.html_str|safe }}</td>
           <td class="text-center">{{ act.cost }}</td>
         </tr>
         {% endfor %}

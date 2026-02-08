@@ -28,7 +28,7 @@
               {% for act in type.full_info_act_list %}
               <tr>
                 {% if not wbreport %}<td class="text-center"><a href="/prnd/{{ act.act_path }}">{{ forloop.counter }}</a></td>{% endif %}
-                <td>{{ act.html_str }}</td>
+                <td>{{ act.html_str|safe }}</td>
                 <td class="text-center">{{ act.cost }}</td>
               </tr>
               {% endfor %}
@@ -94,7 +94,7 @@
           {{ form.detailed_report }}
           {% if form.detailed_report.errors %}<div class="text-danger small mt-1">{{ form.detailed_report.html_error_list }}</div>{% endif %}
         {% else %}
-          <div class="form-control-plaintext">{{ detailed_report }}</div>
+          <div class="form-control-plaintext">{{ detailed_report|safe }}</div>
         {% endif %}
       </div>
     </div>
@@ -188,7 +188,7 @@
       {% for rep in user_report_list %}
       <tr>
         <td>{{ rep.name }}</td>
-        <td>{{ rep.detailed_report }}</td>
+        <td>{{ rep.detailed_report|safe }}</td>
       </tr>
       {% endfor %}
     </tbody>
@@ -262,7 +262,7 @@
           {{ form.detailed_report }}
           {% if form.detailed_report.errors %}<div class="text-danger small mt-1">{{ form.detailed_report.html_error_list }}</div>{% endif %}
         {% else %}
-          <div class="form-control-plaintext">{{ detailed_report }}</div>
+          <div class="form-control-plaintext">{{ detailed_report|safe }}</div>
         {% endif %}
       </div>
       {% if can_modify %}

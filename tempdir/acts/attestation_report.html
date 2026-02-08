@@ -63,7 +63,7 @@
         <div class="section-title">{{ type.act_type_name2 }}</div>
         <ol>
           {% for act in type.full_info_act_list %}
-          <li>{{ act.html_str }}</li>
+          <li>{{ act.html_str|safe }}</li>
           {% endfor %}
         </ol>
       </li>

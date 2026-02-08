@@ -28,6 +28,8 @@ from dataclasses import dataclass
 from html import escape
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 
+from django.utils.safestring import mark_safe
+
 from . import validators
 
 
@@ -240,11 +242,11 @@ class _BoundField:
         if not self.errors:
             return ""
         lis = "".join(f"<li>{escape(e)}</li>" for e in self.errors)
-        return f"<ul class=\"errorlist\">{lis}</ul>"
+        return mark_safe(f"<ul class=\"errorlist\">{lis}</ul>")
 
     def __str__(self) -> str:
         val = self._data.get(self.field.field_name, "")
-        return self.field.render(val)
+        return mark_safe(self.field.render(val))
 
 
 class FormWrapper:

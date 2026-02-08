@@ -20,7 +20,7 @@
             {% for act in act_type.act_list %}
             <tr>
               <td class="w-1">{{ act.username }}</td>
-              <td>{{ act.act }}</td>
+              <td>{{ act.act|safe }}</td>
             </tr>
             {% endfor %}
           {% else %}

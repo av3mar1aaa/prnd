@@ -703,13 +703,13 @@ function updateThemeIcons(theme) {
                 {% block actions %}{% endblock %}
 
                 {% if new_action %}
-                  <a class="btn btn-primary" href="{{ new_path }}"><i class="ti ti-plus"></i> {{ new_action }}</a>
+                  <a class="btn btn-primary" href="/prnd/{{ new_path }}"><i class="ti ti-plus"></i> добавить</a>
                 {% endif %}
                 {% if delete_action %}
-                  <a class="btn btn-outline-danger" href="{{ delete_path }}"><i class="ti ti-trash"></i> {{ delete_action }}</a>
+                  <a class="btn btn-outline-danger" href="/prnd/{{ delete_path }}"><i class="ti ti-trash"></i> удалить</a>
                 {% endif %}
                 {% if list_action %}
-                  <a class="btn btn-outline-secondary" href="{{ list_path }}"><i class="ti ti-arrow-left"></i> {{ list_action }}</a>
+                  <a class="btn btn-outline-secondary" href="/prnd/{{ list_path }}"><i class="ti ti-arrow-left"></i> назад</a>
                 {% endif %}
               </div>
             </div>

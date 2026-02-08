@@ -3,5 +3,5 @@
 {% block title %}Сообщение{% endblock %}
 
 {% block content %}
-<div class="text-center">{{ comment }}</div>
+<div class="text-center">{{ comment|safe }}</div>
 {% endblock %}
