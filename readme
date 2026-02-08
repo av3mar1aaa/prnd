@@ -1,0 +1,23 @@
+1. Dlya raboti nujni setttings_local i db.
+  Soderjanie settings_local:
+    DATABASE_ENGINE = 'sqlite3'
+    DATABASE_NAME = '/var/www/prnd/db'
+    DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+    DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+    TEMPLATE_DIRS = (
+        '/var/www/prnd/tempdir',
+    )
+    
+2. Zapusk programmi: ./manage.py runserver
+Posle etogo s nei mojno rabotat' na localhost:8000/prnd
+
+3. manage.py sql calculator
+
+4. sqlite3 db < ./remove_status.sql
+
+5. raspodpisat' vse otchyoti 2008-go goda:
+  sqlite3 db UPDATE calculator_yearstatistics SET status=0 WHERE year=2008;
+  
+6. dobavit' kolonku v tablitsu: add_column.py
+  primer tipa: int, varchar(500)

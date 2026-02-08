@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Статистика</h4>
+
+<div class="table-responsive">
+  <table class="table table-vcenter card-table">
+    <tbody>
+      {% for entry in list %}
+      <tr>
+        {% for cell in entry %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

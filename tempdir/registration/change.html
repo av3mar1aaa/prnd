@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Изменение пароля{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Изменение пароля</h4>
+
+{% if not changed %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  {% if not no_old %}
+  <div class="mb-3 row">
+    <label class="col-sm-4 col-form-label">Введите старый пароль</label>
+    <div class="col-sm-5">{{ form.old_password }}</div>
+    <div class="col-sm-3">
+      {% if form.old_password.errors %}<div class="text-danger small">{{ form.old_password.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-4 col-form-label">Введите новый пароль</label>
+    <div class="col-sm-5">{{ form.password1 }}</div>
+    <div class="col-sm-3">
+      {% if form.password1.errors %}<div class="text-danger small">{{ form.password1.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-4 col-form-label">Введите новый пароль (еще раз)</label>
+    <div class="col-sm-5">{{ form.password2 }}</div>
+    <div class="col-sm-3">
+      {% if form.password2.errors %}<div class="text-danger small">{{ form.password2.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-key"></i> Изменить пароль</button>
+  </div>
+</form>
+{% else %}
+<div class="alert alert-success" role="alert">
+  Пароль успешно изменен.
+</div>
+{% endif %}
+{% endblock %}

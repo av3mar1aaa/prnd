@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Патент{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">название</label>
+    <div class="col-sm-6">{{ form.name }}</div>
+    <div class="col-sm-3">
+      {% if form.name.errors %}<div class="text-danger small">{{ form.name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">номер</label>
+    <div class="col-sm-6">{{ form.number }}</div>
+    <div class="col-sm-3">
+      {% if form.number.errors %}<div class="text-danger small">{{ form.number.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">место регистрации</label>
+    <div class="col-sm-6">{{ form.place }}</div>
+    <div class="col-sm-3">
+      {% if form.place.errors %}<div class="text-danger small">{{ form.place.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">авторы</label>
+    <div class="col-sm-6">{{ form.authors }} <span class="text-muted small">(через запятую)</span></div>
+    <div class="col-sm-3">
+      {% if form.authors.errors %}<div class="text-danger small">{{ form.authors.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">кол-во авторов</label>
+    <div class="col-sm-6">{{ form.authornum }} <span class="text-muted small">(включая Вас)</span></div>
+    <div class="col-sm-3">
+      {% if form.authornum.errors %}<div class="text-danger small">{{ form.authornum.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год</label>
+    <div class="col-sm-6">{{ form.year }}</div>
+    <div class="col-sm-3">
+      {% if form.year.errors %}<div class="text-danger small">{{ form.year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">комментарий</label>
+    <div class="col-sm-6">{{ form.note }}</div>
+    <div class="col-sm-3">
+      {% if form.note.errors %}<div class="text-danger small">{{ form.note.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+
+<div class="alert alert-light mt-4">
+  <h5 class="alert-heading small fw-bold">Начисление баллов за патенты</h5>
+  <p class="small mb-0">За патент, являющийся результатом выполнения бюджетных НИР, устанавливается балл 20. Для патентов, полученных с соавторами, балл делится на общее число авторов.</p>
+</div>
+{% endblock %}

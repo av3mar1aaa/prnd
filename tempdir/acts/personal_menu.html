@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Персональное меню{% endblock %}
+
+{% block content %}
+<div class="row row-cards">
+  <div class="col-md-6 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2">
+          <i class="ti ti-user-circle" style="color:var(--prnd-accent);"></i> Учетная запись
+        </h3>
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="/prnd/profile/" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+          <i class="ti ti-user text-muted"></i> учетная запись
+        </a>
+      </div>
+      <div class="card-body text-muted small pt-0">
+        <i class="ti ti-info-circle"></i> Управление профилем и личными данными
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2">
+          <i class="ti ti-file-text" style="color:var(--prnd-accent);"></i> Отчеты
+        </h3>
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="/prnd/user_reports/" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+          <i class="ti ti-report text-muted"></i> отчеты
+        </a>
+      </div>
+      <div class="card-body text-muted small pt-0">
+        <i class="ti ti-info-circle"></i> Просмотр и формирование отчетов
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2">
+          <i class="ti ti-certificate" style="color:var(--prnd-accent);"></i> Аттестация
+        </h3>
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="/prnd/cur_user_attestation/" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+          <i class="ti ti-clipboard-check text-muted"></i> аттестация
+        </a>
+      </div>
+      <div class="card-body text-muted small pt-0">
+        <i class="ti ti-info-circle"></i> Данные аттестации сотрудника
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2">
+          <i class="ti ti-microscope" style="color:var(--prnd-accent);"></i> Научная деятельность
+        </h3>
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="/prnd/publications/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-article text-muted"></i> публикации</span>
+          <span class="badge bg-azure-lt">статьи</span>
+        </a>
+        <a href="/prnd/monographs/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-book text-muted"></i> монографии</span>
+          <span class="badge bg-azure-lt">книги</span>
+        </a>
+        <a href="/prnd/conferences/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-presentation text-muted"></i> доклады</span>
+          <span class="badge bg-azure-lt">конференции</span>
+        </a>
+        <a href="/prnd/courses/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-school text-muted"></i> курсы лекций и семинары</span>
+          <span class="badge bg-azure-lt">образование</span>
+        </a>
+        <a href="/prnd/patents/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-license text-muted"></i> патенты</span>
+          <span class="badge bg-azure-lt">ИС</span>
+        </a>
+        <a href="/prnd/supervising/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-users-group text-muted"></i> научное руководство</span>
+          <span class="badge bg-azure-lt">диссертации</span>
+        </a>
+        <a href="/prnd/editing/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-edit text-muted"></i> редактирование научных изданий</span>
+          <span class="badge bg-azure-lt">издания</span>
+        </a>
+        <a href="/prnd/editingcollegium/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-clipboard-text text-muted"></i> работа в составе ред. коллегий</span>
+          <span class="badge bg-azure-lt">издания</span>
+        </a>
+        <a href="/prnd/orgwork/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-building text-muted"></i> научно-орг. работа</span>
+          <span class="badge bg-azure-lt">комитеты</span>
+        </a>
+        <a href="/prnd/opposing/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-scale text-muted"></i> оппонирование</span>
+          <span class="badge bg-azure-lt">экспертиза</span>
+        </a>
+        <a href="/prnd/grants/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-cash text-muted"></i> гранты</span>
+          <span class="badge bg-azure-lt">финансирование</span>
+        </a>
+        <a href="/prnd/awards/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <span class="d-flex align-items-center gap-2"><i class="ti ti-award text-muted"></i> награды</span>
+          <span class="badge bg-azure-lt">премии</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

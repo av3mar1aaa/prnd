@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Журнал{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">полное название журнала</label>
+    <div class="col-sm-6">{{ form.fullname }}</div>
+    <div class="col-sm-3">
+      {% if form.fullname.errors %}<div class="text-danger small">{{ form.fullname.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">тип</label>
+    <div class="col-sm-6">{{ form.type }}</div>
+    <div class="col-sm-3">
+      {% if form.type.errors %}<div class="text-danger small">{{ form.type.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">impact factor</label>
+    <div class="col-sm-6">{{ form.impactfactor }}</div>
+    <div class="col-sm-3">
+      {% if form.impactfactor.errors %}<div class="text-danger small">{{ form.impactfactor.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+{% endblock %}

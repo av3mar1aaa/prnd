@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Все записи пользователя {{ name }} за {{ year }}-й год{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Все записи пользователя {{ name }} за {{ year }}-й год</h4>
+
+{% if lab_list %}
+  {% for act_type in lab_list %}
+    <div class="d-flex align-items-center gap-2 mt-4 mb-3">
+      <i class="ti ti-article text-muted"></i>
+      <h5 class="mb-0 fw-semibold" style="font-size:.875rem;">{{ act_type.act_name }}</h5>
+      <hr class="flex-grow-1 m-0" style="border-color:rgba(0,0,0,.08);">
+    </div>
+
+    <div class="table-responsive mb-3">
+      <table class="table table-vcenter card-table">
+        <tbody>
+          {% if act_type.act_list %}
+            {% for act in act_type.act_list %}
+            <tr>
+              <td class="w-1">{{ act.username }}</td>
+              <td>{{ act.act }}</td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td class="text-center text-muted" style="padding:1.5rem;">
+                <i class="ti ti-inbox d-block mb-1" style="font-size:1.5rem;opacity:.5;"></i>
+                Записей пока нет
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+{% endif %}
+{% endblock %}

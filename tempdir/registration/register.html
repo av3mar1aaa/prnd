@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}{% if modify %}Изменение учетной записи{% else %}Создание учетной записи{% endif %}{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">{% if modify %}Изменение учетной записи{% else %}Создание учетной записи{% endif %}</h4>
+
+<form action="." method="post">
+  {% csrf_token %}
+
+  {% if not modify %}
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">имя учетной записи</label>
+    <div class="col-sm-5">{{ form.username }}</div>
+    <div class="col-sm-2 text-muted small d-flex align-items-center">латинскими буквами</div>
+    <div class="col-sm-2">
+      {% if form.username.errors %}<div class="text-danger small">{{ form.username.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">фамилия</label>
+    <div class="col-sm-5">{{ form.last_name }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.last_name.errors %}<div class="text-danger small">{{ form.last_name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">имя и отчество</label>
+    <div class="col-sm-5">{{ form.first_name }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.first_name.errors %}<div class="text-danger small">{{ form.first_name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">e-mail</label>
+    <div class="col-sm-5">{{ form.email }}</div>
+    <div class="col-sm-2 text-muted small d-flex align-items-center">указывайте существующий ящик</div>
+    <div class="col-sm-2">
+      {% if form.email.errors %}<div class="text-danger small">{{ form.email.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">лаборатория</label>
+    <div class="col-sm-5">{{ form.groups }}</div>
+    <div class="col-sm-2 text-muted small d-flex align-items-center">{% if is_zavlab %}ответственный по лаборатории не может менять это поле{% endif %}</div>
+    <div class="col-sm-2">
+      {% if form.groups.errors %}<div class="text-danger small">{{ form.groups.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год рождения</label>
+    <div class="col-sm-5">{{ form.birth_year }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.birth_year.errors %}<div class="text-danger small">{{ form.birth_year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год окончания ВУЗа</label>
+    <div class="col-sm-5">{{ form.diplom_year }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.diplom_year.errors %}<div class="text-danger small">{{ form.diplom_year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">ученая степень</label>
+    <div class="col-sm-5">{{ form.degree }}</div>
+    <div class="col-sm-2 text-muted small d-flex align-items-center">наивысшая</div>
+    <div class="col-sm-2">
+      {% if form.degree.errors %}<div class="text-danger small">{{ form.degree.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год получения степени</label>
+    <div class="col-sm-5">{{ form.phd_year }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.phd_year.errors %}<div class="text-danger small">{{ form.phd_year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">статус</label>
+    <div class="col-sm-5">{{ form.status }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.status.errors %}<div class="text-danger small">{{ form.status.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">должность</label>
+    <div class="col-sm-5">{{ form.rank }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.rank.errors %}<div class="text-danger small">{{ form.rank.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">звание</label>
+    <div class="col-sm-5">{{ form.title }}</div>
+    <div class="col-sm-2 text-muted small d-flex align-items-center">наивысшее</div>
+    <div class="col-sm-2">
+      {% if form.title.errors %}<div class="text-danger small">{{ form.title.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">ставка</label>
+    <div class="col-sm-5">{{ form.rate }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.rate.errors %}<div class="text-danger small">{{ form.rate.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">уведомлять по почте</label>
+    <div class="col-sm-5">{{ form.email_verbose }}</div>
+    <div class="col-sm-2 text-muted small d-flex align-items-center">отчеты будут высылаться на указанный e-mail</div>
+    <div class="col-sm-2">
+      {% if form.email_verbose.errors %}<div class="text-danger small">{{ form.email_verbose.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  {% if not modify %}
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">пароль</label>
+    <div class="col-sm-5">{{ form.password1 }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.password1.errors %}<div class="text-danger small">{{ form.password1.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">подтверждение пароля</label>
+    <div class="col-sm-5">{{ form.password2 }}</div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      {% if form.password2.errors %}<div class="text-danger small">{{ form.password2.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+  {% else %}
+    {% if change_passwd %}
+    <div class="mb-3 row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-5">
+        <a href="/prnd/change/" class="btn btn-outline-secondary btn-sm">Изменить пароль</a>
+      </div>
+    </div>
+    {% endif %}
+  {% endif %}
+
+  {% if is_admin or is_zavlab %}
+    {% if not change_passwd %}
+    <hr class="my-4">
+    <h5 class="mb-3">Администрирование</h5>
+
+    <div class="mb-3 row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-5">
+        <a href="delete" class="btn btn-outline-danger btn-sm"><i class="ti ti-user-minus"></i> Удалить учетную запись пользователя</a>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">ответственный по лаборатории</label>
+      <div class="col-sm-5">
+        {% if zavlab_non_modify %}
+          <span class="form-control-plaintext">да</span>
+        {% else %}
+          {{ form.is_zavlab }}
+        {% endif %}
+      </div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-2">
+        {% if form.is_zavlab.errors %}<div class="text-danger small">{{ form.is_zavlab.html_error_list }}</div>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">глава подразделения</label>
+      <div class="col-sm-5">{{ form.is_headlab }}</div>
+      <div class="col-sm-2 text-muted small d-flex align-items-center">для специального расчета баллов</div>
+      <div class="col-sm-2">
+        {% if form.is_headlab.errors %}<div class="text-danger small">{{ form.is_headlab.html_error_list }}</div>{% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if is_admin %}
+    {% if not change_passwd %}
+    <div class="mb-3 row">
+      <label class="col-sm-3 col-form-label">ответственный по институту</label>
+      <div class="col-sm-5">{{ form.is_admin }}</div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-2">
+        {% if form.is_admin.errors %}<div class="text-danger small">{{ form.is_admin.html_error_list }}</div>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+  {% endif %}
+
+  <div class="mt-4">
+    {% if not modify %}
+    <button type="submit" class="btn btn-primary"><i class="ti ti-user-plus"></i> Создать учетную запись</button>
+    {% else %}
+    <button type="submit" class="btn btn-primary"><i class="ti ti-user-plus"></i> Сохранить учетную запись</button>
+    {% endif %}
+  </div>
+</form>
+{% endblock %}

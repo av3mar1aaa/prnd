@@ -1,0 +1,31 @@
+{% extends "base_unlog.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<form method="post" action="">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label class="form-label" for="id_username">Логин</label>
+    <input class="form-control" type="text" name="username" id="id_username" autocomplete="username" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="id_password">Пароль</label>
+    <input class="form-control" type="password" name="password" id="id_password" autocomplete="current-password" required>
+  </div>
+
+  {% if error %}
+    <div class="alert alert-danger" role="alert"><i class="ti ti-alert-circle me-1"></i> {{ error }}</div>
+  {% endif %}
+
+  <div class="form-footer">
+    <button type="submit" class="btn btn-primary w-100"><i class="ti ti-login"></i> Войти</button>
+  </div>
+
+  <div class="text-center text-muted mt-3">
+    <a href="/prnd/forgot/">Забыли пароль?</a>
+  </div>
+</form>
+{% endblock %}

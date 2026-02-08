@@ -1,0 +1,33 @@
+{% extends "base_unlog.html" %}
+
+{% block title %}Восстановление пароля{% endblock %}
+
+{% block content %}
+<h4 class="mb-3">Вы забыли имя учетной записи или пароль?</h4>
+
+<p class="text-muted">
+  Существует два способа восстановления пароля. Если Вы помните имя своей учетной записи, введите его в соответствующее поле снизу и информация для восстановления пароля будет выслана Вам на адрес, указанный при регистрации. Если Вы забыли имя учетной записи, введите адрес, который Вы указали при регистрации, и информация будет выслана на этот адрес, если найдется соответствующая учетная запись.
+</p>
+
+<form method="post" action=".">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label class="form-label" for="id_username">имя пользователя</label>
+    {{ form.username }}
+    {% if form.username.errors %}<div class="text-danger small mt-1">{{ form.username.html_error_list }}</div>{% endif %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="id_email">Email</label>
+    {{ form.email }}
+    {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.html_error_list }}</div>{% endif %}
+  </div>
+
+  <input type="hidden" name="next" value="{{ next }}">
+
+  <div class="form-footer">
+    <button type="submit" class="btn btn-primary w-100"><i class="ti ti-mail"></i> Продолжить</button>
+  </div>
+</form>
+{% endblock %}

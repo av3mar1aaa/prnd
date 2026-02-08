@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Отчеты сотрудников</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+<pre>
+{% if all_user_reports %}
+{% for user_report in all_user_reports %} {{ user_report.realname }} {{ user_report.total_cost }}
+{% endfor %}
+{% endif %}
+</pre>
+</body>
+</html>

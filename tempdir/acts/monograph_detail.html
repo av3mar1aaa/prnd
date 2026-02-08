@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Монография{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">название</label>
+    <div class="col-sm-6">{{ form.name }}</div>
+    <div class="col-sm-3">
+      {% if form.name.errors %}<div class="text-danger small">{{ form.name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">автор(ы)</label>
+    <div class="col-sm-6">{{ form.authors }} <span class="text-muted small">(через запятую)</span></div>
+    <div class="col-sm-3">
+      {% if form.authors.errors %}<div class="text-danger small">{{ form.authors.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">кол-во авторов</label>
+    <div class="col-sm-6">{{ form.authornum }} <span class="text-muted small">(включая Вас)</span></div>
+    <div class="col-sm-3">
+      {% if form.authornum.errors %}<div class="text-danger small">{{ form.authornum.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">выбрать издательство из списка</label>
+    <div class="col-sm-6">{{ form.journal_id }}</div>
+    <div class="col-sm-3">
+      {% if form.journal_id.errors %}<div class="text-danger small">{{ form.journal_id.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">издательство (если не выбрано из списка)</label>
+    <div class="col-sm-6">{{ form.journal }}</div>
+    <div class="col-sm-3">
+      {% if form.journal.errors %}<div class="text-danger small">{{ form.journal.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">кол-во печатных листов</label>
+    <div class="col-sm-6">{{ form.pagenum }} <span class="text-muted small">(именно печ. листов, а не страниц)</span></div>
+    <div class="col-sm-3">
+      {% if form.pagenum.errors %}<div class="text-danger small">{{ form.pagenum.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">шифр ISBN</label>
+    <div class="col-sm-6">{{ form.isbn }}</div>
+    <div class="col-sm-3">
+      {% if form.isbn.errors %}<div class="text-danger small">{{ form.isbn.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">гриф Минобрнауки</label>
+    <div class="col-sm-6">{{ form.grif }}</div>
+    <div class="col-sm-3">
+      {% if form.grif.errors %}<div class="text-danger small">{{ form.grif.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год</label>
+    <div class="col-sm-6">{{ form.year }}</div>
+    <div class="col-sm-3">
+      {% if form.year.errors %}<div class="text-danger small">{{ form.year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">комментарий</label>
+    <div class="col-sm-6">{{ form.note }}</div>
+    <div class="col-sm-3">
+      {% if form.note.errors %}<div class="text-danger small">{{ form.note.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  {% if is_admin %}
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">повышающий коэффициент</label>
+    <div class="col-sm-6">{{ form.coef }}</div>
+    <div class="col-sm-3">
+      {% if form.coef.errors %}<div class="text-danger small">{{ form.coef.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+
+<div class="alert alert-light mt-4">
+  <h5 class="alert-heading small fw-bold">Начисление баллов за монографии и учебники</h5>
+  <ul class="small mb-0">
+    <li>За монографии и учебники устанавливается балл, равный объему монографии в печатных листах, умноженному на повышающий коэффициент k, 2≤k≤3.</li>
+    <li>Повышающий коэффициент k, равный трем, устанавливается, как правило, для монографий и учебников, изданных ведущими научными издательствами.</li>
+    <li>При наличии соавторов балл делится на общее количество авторов.</li>
+    <li>Не учитываются стереотипные переиздания, балл за переработанные переиздания устанавливается пропорционально объему нового материала.</li>
+    <li>Включение конкретных монографий и учебников в расчет индивидуальных ПРНД, а также значение повышающего коэффициента принимается специальным решением Ученого Совета.</li>
+  </ul>
+</div>
+{% endblock %}

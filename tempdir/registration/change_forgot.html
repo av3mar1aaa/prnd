@@ -1,0 +1,27 @@
+{% extends "base_unlog.html" %}
+
+{% block title %}Изменение пароля{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Изменение пароля учетной записи {{ username }}</h4>
+
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label class="form-label">Введите новый пароль</label>
+    {{ form.password1 }}
+    {% if form.password1.errors %}<div class="text-danger small mt-1">{{ form.password1.html_error_list }}</div>{% endif %}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Подтвердите новый пароль</label>
+    {{ form.password2 }}
+    {% if form.password2.errors %}<div class="text-danger small mt-1">{{ form.password2.html_error_list }}</div>{% endif %}
+  </div>
+
+  <div class="form-footer">
+    <button type="submit" class="btn btn-primary w-100"><i class="ti ti-key"></i> Изменить пароль</button>
+  </div>
+</form>
+{% endblock %}

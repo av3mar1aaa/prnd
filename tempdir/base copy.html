@@ -1,0 +1,368 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Browser tab title. Kept simple to avoid duplicate block definitions with legacy templates. -->
+  <title>ПРНД</title>
+
+  <!-- Tabler (Bootstrap-based UI) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js" defer></script>
+
+  <!-- Light, formal palette + backward-compatible styling for legacy templates -->
+  <style>
+    :root{
+      --prnd-accent: #2b4c7e; /* restrained blue */
+      --prnd-accent-2: #0f6f6e; /* muted teal for highlights */
+    }
+
+    /* Make legacy font tags not fight modern theme */
+    font{ color: inherit !important; font-size: inherit !important; }
+
+    body{ background: var(--tblr-bg-surface-secondary); }
+
+    /* Global typography */
+    .prnd-app-title{ letter-spacing: .02em; }
+
+    /* Legacy tables used as section headers */
+    table.wraptable{ width: 100%; border-collapse: separate; border-spacing: 0; margin: 0 0 .75rem 0; }
+    table.wraptable th{
+      text-align: left;
+      padding: .75rem 1rem;
+      background: var(--tblr-bg-surface);
+      border: 1px solid var(--tblr-border-color);
+      border-radius: var(--tblr-border-radius);
+      font-weight: 600;
+    }
+
+    /* Legacy data tables */
+    table.profiletable, table.yearstatisticstable, table.commonform, table.listtable{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--tblr-bg-surface);
+      border: 1px solid var(--tblr-border-color);
+      border-radius: var(--tblr-border-radius);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    table.profiletable th, table.yearstatisticstable th, table.commonform th, table.listtable th{
+      background: var(--tblr-bg-surface-tertiary);
+      font-weight: 600;
+      padding: .6rem .75rem;
+      border-bottom: 1px solid var(--tblr-border-color);
+    }
+    table.profiletable td, table.yearstatisticstable td, table.commonform td, table.listtable td{
+      padding: .55rem .75rem;
+      border-bottom: 1px solid var(--tblr-border-color-translucent);
+      vertical-align: top;
+    }
+    table.profiletable tr:last-child td,
+    table.yearstatisticstable tr:last-child td,
+    table.commonform tr:last-child td,
+    table.listtable tr:last-child td{ border-bottom: 0; }
+
+    /* Forms: upgrade legacy inputs without rewriting all templates */
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    input[type="url"],
+    input[type="date"],
+    textarea,
+    select{
+      display: block;
+      width: 100%;
+      padding: .5rem .75rem;
+      font-size: .875rem;
+      line-height: 1.4;
+      color: var(--tblr-body-color);
+      background-color: var(--tblr-bg-surface);
+      background-clip: padding-box;
+      border: 1px solid var(--tblr-border-color);
+      border-radius: var(--tblr-border-radius);
+    }
+    textarea{ min-height: 6rem; }
+
+    input[type="submit"], input[type="button"], button{
+      --tblr-btn-bg: var(--prnd-accent);
+      --tblr-btn-border-color: var(--prnd-accent);
+      --tblr-btn-color: #fff;
+      padding: .5rem .9rem;
+      border-radius: var(--tblr-border-radius);
+      border: 1px solid var(--tblr-btn-border-color);
+      background: var(--tblr-btn-bg);
+      color: var(--tblr-btn-color);
+      font-size: .875rem;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover, input[type="button"]:hover, button:hover{ filter: brightness(.95); }
+    input[type="submit"]:focus, input[type="button"]:focus, button:focus{ outline: none; box-shadow: 0 0 0 .25rem rgba(43,76,126,.25); }
+    input[type="submit"].btn-secondary,
+    input[type="button"].btn-secondary{
+      --tblr-btn-bg: var(--tblr-bg-surface-tertiary);
+      --tblr-btn-border-color: var(--tblr-border-color);
+      --tblr-btn-color: var(--tblr-body-color);
+    }
+
+    /* Links in menu should not look loud */
+    .navbar-vertical .nav-link{ color: var(--tblr-body-color); }
+    .navbar-vertical .nav-link.active,
+    .navbar-vertical .nav-link:hover{ color: var(--prnd-accent); }
+
+    /* Subtle “math” accent line */
+    .prnd-accent-bar{
+      height: 2px;
+      background: linear-gradient(90deg, var(--prnd-accent), var(--prnd-accent-2));
+    }
+
+    /* Make very old center tags behave */
+    center{ display: block; }
+  </style>
+</head>
+
+<body>
+
+{#
+  We keep a single block named "content" below and wrap it with either the wbreport
+  layout or the full application layout.
+#}
+
+{% if wbreport %}
+
+  <div class="page">
+    <div class="page-wrapper">
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="card">
+            <div class="card-body">
+
+{% else %}
+
+  <div class="page">
+
+    {% if not unlog %}
+    <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <h1 class="navbar-brand navbar-brand-autodark">
+          <a href="/prnd/" class="text-decoration-none">
+            <span class="prnd-app-title">ПРНД</span>
+          </a>
+        </h1>
+
+        <div class="collapse navbar-collapse" id="sidebar-menu">
+          <div class="prnd-accent-bar my-2"></div>
+          <ul class="navbar-nav pt-lg-3">
+
+            <li class="nav-item">
+              <a class="nav-link" href="/prnd/" >
+                <span class="nav-link-title">Главная</span>
+              </a>
+            </li>
+
+            {% if is_laboratory or is_institute %}
+              <li class="nav-item mt-2">
+                <div class="alert alert-info mb-0" role="alert">
+                  Вы находитесь в режиме web отчета.
+                  <br>
+                  Для заполнения данных используйте страницу
+                  <a href="https://www.pdmi.ras.ru/prnd/" class="alert-link">https://www.pdmi.ras.ru/prnd/</a>
+                </div>
+              </li>
+            {% else %}
+              <li class="nav-item mt-2">
+                <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                  <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Отчеты</span>
+                </div>
+              </li>
+              {% for y in report_years %}
+                <li class="nav-item">
+                  <a class="nav-link {% if y == year %}active{% endif %}" href="/prnd/cur_user_year_report/{{ y }}/">{{ y }}</a>
+            <li class="nav-item mt-3">
+              <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Научная деятельность</span>
+              </div>
+            </li>
+
+            <li class="nav-item"><a class="nav-link" href="/prnd/publications/">Публикации</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/monographs/">Монографии</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/conferences/">Доклады</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/courses/">Курсы лекций и семинары</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/patents/">Патенты</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/supervising/">Научное руководство</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/editing/">Редактирование научных изданий</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/editingcollegium/">Работа в составе ред. коллегий</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/orgwork/">Научно-орг. работа</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/opposing/">Оппонирование</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/grants/">Гранты</a></li>
+            <li class="nav-item"><a class="nav-link" href="/prnd/awards/">Награды</a></li>
+
+                </li>
+              {% endfor %}
+            {% endif %}
+
+            {% if is_admin %}
+              <li class="nav-item mt-3">
+                <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                  <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Администрирование</span>
+                </div>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="/register/admin/">Администраторская</a></li>
+            {% endif %}
+
+            {% if is_zavlab %}
+              <li class="nav-item mt-3">
+                <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                  <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Лаборатория</span>
+                </div>
+              </li>
+              {% for y in report_years %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/prnd/laboratory/{{ request.user.id }}/{{ y }}/">Отчеты за {{ y }}</a>
+                </li>
+              {% endfor %}
+            {% endif %}
+
+            {% if not is_laboratory and not is_institute %}
+              <li class="nav-item mt-3">
+                <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                  <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Статистика</span>
+                </div>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="/prnd/full_statistics/">Коэффициенты</a></li>
+              <li class="nav-item"><a class="nav-link" href="/prnd/all_user_reports/">Рейтинги</a></li>
+            {% endif %}
+
+            {% if is_admin %}
+              <li class="nav-item mt-3">
+                <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                  <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Справочники</span>
+                </div>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="/statistics/sjournal_list/">Список A/B</a></li>
+              <li class="nav-item"><a class="nav-link" href="/statistics/costs/">Стоимость</a></li>
+            {% endif %}
+
+            <li class="nav-item mt-3">
+              <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Сеанс</span>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout/">Выйти</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </aside>
+    {% endif %}
+
+    <div class="page-wrapper">
+
+      {% if not unlog %}
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                <div class="d-none d-xl-block ps-2">
+                  <div>{{ user.username }}</div>
+                  <div class="mt-1 small text-muted">{{ owner_username }}</div>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <a class="dropdown-item" href="/logout/">Выйти</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="navbar-nav">
+            <div class="nav-item">
+              <span class="nav-link">{{ institute_name }}</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      {% endif %}
+
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <h2 class="page-title">{% block title %}{% endblock %}</h2>
+              {% if message %}
+                <div class="text-muted mt-1">{{ message }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+              <div class="btn-list">
+                {% block actions %}{% endblock %}
+
+                {% if new_action %}
+                  <a class="btn" style="--tblr-btn-bg: var(--prnd-accent); --tblr-btn-border-color: var(--prnd-accent); --tblr-btn-color:#fff;" href="{{ new_path }}">{{ new_action }}</a>
+                {% endif %}
+                {% if delete_action %}
+                  <a class="btn btn-outline-danger" href="{{ delete_path }}">{{ delete_action }}</a>
+                {% endif %}
+                {% if list_action %}
+                  <a class="btn btn-outline-secondary" href="{{ list_path }}">{{ list_action }}</a>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="page-body">
+        <div class="container-xl">
+
+          {% if not unlog and owner_message %}
+            <div class="alert alert-success" role="alert">{{ owner_message }}</div>
+          {% endif %}
+
+          {% if not unlog and user_message %}
+            <div class="alert alert-warning" role="alert">{{ user_message }}</div>
+          {% endif %}
+
+          <div class="card">
+            <div class="card-body">
+
+{% endif %}
+
+{# === single content block for all layouts === #}
+{% block content %}{% endblock %}
+
+{% if wbreport %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% else %}
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Публикация{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">тип</label>
+    <div class="col-sm-6">{{ form.pubtype }}</div>
+    <div class="col-sm-3">
+      {% if form.pubtype.errors %}<div class="text-danger small">{{ form.pubtype.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">название статьи</label>
+    <div class="col-sm-6">{{ form.name }} <span class="text-muted small">(по возможности, не используйте команды ТеХ)</span></div>
+    <div class="col-sm-3">
+      {% if form.name.errors %}<div class="text-danger small">{{ form.name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">автор(ы)</label>
+    <div class="col-sm-6">{{ form.authors }} <span class="text-muted small">(в формате И.О.Фамилия, авторы через запятую)</span></div>
+    <div class="col-sm-3">
+      {% if form.authors.errors %}<div class="text-danger small">{{ form.authors.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">кол-во авторов</label>
+    <div class="col-sm-6">{{ form.authornum }} <span class="text-muted small">(включая Вас)</span></div>
+    <div class="col-sm-3">
+      {% if form.authornum.errors %}<div class="text-danger small">{{ form.authornum.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">выбрать издание из списка</label>
+    <div class="col-sm-6">{{ form.journal_id }}</div>
+    <div class="col-sm-3">
+      {% if form.journal_id.errors %}<div class="text-danger small">{{ form.journal_id.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">издание (если не выбрано из списка)</label>
+    <div class="col-sm-6">{{ form.journal }}</div>
+    <div class="col-sm-3">
+      {% if form.journal.errors %}<div class="text-danger small">{{ form.journal.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">том</label>
+    <div class="col-sm-6">{{ form.volume }}</div>
+    <div class="col-sm-3">
+      {% if form.volume.errors %}<div class="text-danger small">{{ form.volume.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">номер</label>
+    <div class="col-sm-6">{{ form.jnumber }}</div>
+    <div class="col-sm-3">
+      {% if form.jnumber.errors %}<div class="text-danger small">{{ form.jnumber.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">идентификационный номер статьи</label>
+    <div class="col-sm-6">{{ form.idnumber }}</div>
+    <div class="col-sm-3">
+      {% if form.idnumber.errors %}<div class="text-danger small">{{ form.idnumber.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">страницы</label>
+    <div class="col-sm-6">{{ form.pages }}</div>
+    <div class="col-sm-3">
+      {% if form.pages.errors %}<div class="text-danger small">{{ form.pages.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год</label>
+    <div class="col-sm-6">{{ form.year }}</div>
+    <div class="col-sm-3">
+      {% if form.year.errors %}<div class="text-danger small">{{ form.year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">язык издания</label>
+    <div class="col-sm-6">{{ form.language }}</div>
+    <div class="col-sm-3">
+      {% if form.language.errors %}<div class="text-danger small">{{ form.language.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">веб-страница</label>
+    <div class="col-sm-6">{{ form.webpage }}</div>
+    <div class="col-sm-3">
+      {% if form.webpage.errors %}<div class="text-danger small">{{ form.webpage.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">соавторы среди коллектива института</label>
+    <div class="col-sm-6">{{ form.instcoauthors }}</div>
+    <div class="col-sm-3">
+      {% if form.instcoauthors.errors %}<div class="text-danger small">{{ form.instcoauthors.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">комментарий</label>
+    <div class="col-sm-6">{{ form.note }}</div>
+    <div class="col-sm-3">
+      {% if form.note.errors %}<div class="text-danger small">{{ form.note.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+
+<div class="alert alert-warning mt-4">
+  <p class="small mb-0"><strong>Обратите внимание:</strong> каждая Ваша статья должна присутствовать в программе не более одного раза (даже если она опубликована дважды, в том числе как переработанная версия).</p>
+</div>
+
+<div class="alert alert-light mt-3">
+  <h5 class="alert-heading small fw-bold">Начисление баллов за публикации</h5>
+  <ul class="small mb-0">
+    <li>За публикацию статьи в ведущем рецензируемом российском или зарубежном журнале, сборнике или продолжающемся издании, обладающем высоким индексом цитирования (Список А) начисляется 30 баллов.</li>
+    <li>За публикацию статьи в рецензируемом российском или зарубежном журнале, сборнике или продолжающемся издании (Список Б) начисляется 15 баллов.</li>
+    <li>За публикацию новых результатов в иной форме (в том числе, в журналах и изданиях, не входящих в списки А и Б) начисляется 6 баллов.</li>
+    <li>Для статей, написанных в соавторстве, балл за публикацию делится на количество авторов публикации, доли меньшие 10 процентов округляются до 10 процентов.</li>
+    <li>Включение изданий в Список А и Список Б осуществляется на основании рекомендации комиссии. Списки утверждаются специальным решением ученого совета.</li>
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Статистика по пользователям{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Статистика по пользователям</h4>
+
+<div class="table-responsive">
+  <table class="table table-vcenter card-table table-sm">
+    <thead>
+      <tr>
+        <th>профайл</th>
+        <th>личная статистика</th>
+        <th class="text-center">публи-<br>кации</th>
+        <th class="text-center">моно-<br>графии</th>
+        <th class="text-center">доклады</th>
+        <th class="text-center">курсовые</th>
+        <th class="text-center">патенты</th>
+        <th class="text-center">руко-<br>водство</th>
+        <th class="text-center">редакти-<br>рование</th>
+        <th class="text-center">орг.-<br>работа</th>
+        <th class="text-center">оппони-<br>рование</th>
+        <th class="text-center">коэф</th>
+        <th class="text-center">всего</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in full_stat_list %}
+      <tr>
+        <td><a href="/prnd/profile/{{ s.userid }}">{{ s.nickname }}</a></td>
+        <td>
+          <a href="/prnd/users/{{ s.userid }}">{{ s.realname }}</a>
+          <div class="text-muted small">лаб. {{ s.userlab }}</div>
+        </td>
+        {% for cost in s.u_cost_list %}
+        <td class="text-center">{{ cost }}</td>
+        {% endfor %}
+        <td class="text-center">{{ s.usercoef }}</td>
+        <td class="text-center fw-bold">{{ s.total_cost }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

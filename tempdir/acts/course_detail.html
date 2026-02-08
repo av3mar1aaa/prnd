@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Курс лекций{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">тип курса/семинара</label>
+    <div class="col-sm-6">{{ form.coursetype }}</div>
+    <div class="col-sm-3">
+      {% if form.coursetype.errors %}<div class="text-danger small">{{ form.coursetype.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">название</label>
+    <div class="col-sm-6">{{ form.name }}</div>
+    <div class="col-sm-3">
+      {% if form.name.errors %}<div class="text-danger small">{{ form.name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">продолжительность</label>
+    <div class="col-sm-6">{{ form.duration }} <span class="text-muted small">(кол-во семестров за год, введенный ниже)</span></div>
+    <div class="col-sm-3">
+      {% if form.duration.errors %}<div class="text-danger small">{{ form.duration.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год</label>
+    <div class="col-sm-6">{{ form.year }} <span class="text-muted small">(календарный)</span></div>
+    <div class="col-sm-3">
+      {% if form.year.errors %}<div class="text-danger small">{{ form.year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">комментарий</label>
+    <div class="col-sm-6">{{ form.note }}</div>
+    <div class="col-sm-3">
+      {% if form.note.errors %}<div class="text-danger small">{{ form.note.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+
+<div class="alert alert-light mt-4">
+  <h5 class="alert-heading small fw-bold">Начисление баллов за курсы и семинары</h5>
+  <ul class="small mb-0">
+    <li>За разработку нового научно-образовательного курса лекций, читаемого впервые, устанавливается балл 20 за каждый семестр курса.</li>
+    <li>За доработку научно-образовательного курса, включающего введение нового актуального материала, устанавливается балл 10 во второй год чтения курса и балл 5 в последующие годы.</li>
+    <li>За руководство специализированным студенческим семинаром устанавливается балл 5 за каждый семестр.</li>
+  </ul>
+</div>
+{% endblock %}

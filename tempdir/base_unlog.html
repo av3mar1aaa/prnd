@@ -1,0 +1,223 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <script>
+    (function(){
+      var t = localStorage.getItem('prnd-theme');
+      if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ПРНД{% endblock %}</title>
+
+  <!-- Tabler (Bootstrap-based UI) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js" defer></script>
+
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --prnd-accent: #6366f1;
+      --prnd-accent-hover: #4f46e5;
+      --prnd-accent-light: rgba(99,102,241,.07);
+      --prnd-radius-sm: 12px;
+      --prnd-radius-lg: 20px;
+      --prnd-shadow: 0 4px 12px rgba(0,0,0,.06);
+      --prnd-shadow-lg: 0 8px 24px rgba(0,0,0,.08);
+      --prnd-transition: .2s ease;
+      --prnd-focus-ring: 0 0 0 3px rgba(99,102,241,.2);
+      --prnd-bg: #f4f5fa;
+      --prnd-bg-warm: #eef0f8;
+      --prnd-surface: #ffffff;
+      --prnd-border: #e5e7eb;
+      --prnd-text: #1f2937;
+      --prnd-text-muted: #6b7280;
+    }
+
+    [data-theme="dark"] {
+      --prnd-bg: #111318;
+      --prnd-bg-warm: #13151f;
+      --prnd-surface: #1a1d27;
+      --prnd-border: #2d3140;
+      --prnd-text: #e5e7eb;
+      --prnd-text-muted: #9ca3af;
+      --prnd-accent-light: rgba(99,102,241,.12);
+      --prnd-shadow: 0 4px 12px rgba(0,0,0,.2);
+      --prnd-shadow-lg: 0 8px 24px rgba(0,0,0,.3);
+    }
+
+    @keyframes prnd-fade-in {
+      from { opacity: 0; transform: translateY(15px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Top accent stripe */
+    body::before {
+      content: '';
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--prnd-accent);
+      z-index: 9999;
+    }
+
+    /* Dot pattern */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, var(--prnd-accent) .5px, transparent .5px);
+      background-size: 24px 24px;
+      opacity: .035;
+      pointer-events: none; z-index: 0;
+    }
+    [data-theme="dark"] body::after { opacity: .04; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(160deg, var(--prnd-bg) 0%, var(--prnd-bg-warm) 100%);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      color: var(--prnd-text);
+    }
+
+    font { color: inherit !important; font-size: inherit !important; }
+
+    .container-tight { animation: prnd-fade-in .5s ease-out; }
+
+    .prnd-brand-icon {
+      width: 56px; height: 56px;
+      background: var(--prnd-accent); border-radius: var(--prnd-radius-sm);
+      color: #fff; font-size: 1.5rem;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    .prnd-login-title {
+      color: var(--prnd-accent);
+      font-size: 1.5rem; font-weight: 700; letter-spacing: .02em;
+    }
+
+    .prnd-login-subtitle { color: var(--prnd-text-muted) !important; font-size: .875rem; }
+
+    .card {
+      background: var(--prnd-surface);
+      border: 1px solid var(--prnd-border);
+      border-left: 3px solid var(--prnd-accent);
+      border-radius: var(--prnd-radius-lg) !important;
+      box-shadow: var(--prnd-shadow-lg) !important;
+      transition: box-shadow var(--prnd-transition);
+    }
+    .card:hover { box-shadow: 0 8px 24px -4px rgba(99,102,241,.15) !important; }
+    .card-body { padding: 2rem; }
+
+    .form-label { font-weight: 500; font-size: .875rem; color: var(--prnd-text-muted); margin-bottom: .375rem; }
+
+    input[type="text"], input[type="password"], input[type="email"],
+    textarea, select, .form-control {
+      display: block; width: 100%; padding: .875rem 1rem;
+      font-size: .875rem; line-height: 1.5;
+      border: 1.5px solid var(--prnd-border);
+      border-radius: var(--prnd-radius-sm);
+      background: var(--prnd-surface); color: var(--prnd-text);
+      transition: all var(--prnd-transition);
+    }
+    input:focus, textarea:focus, select:focus, .form-control:focus {
+      border-color: var(--prnd-accent); box-shadow: var(--prnd-focus-ring); outline: none;
+    }
+
+    .btn { border-radius: var(--prnd-radius-sm); transition: all var(--prnd-transition); }
+    .btn-primary {
+      background: var(--prnd-accent); border-color: var(--prnd-accent); color: #fff;
+      padding: .875rem 1.5rem; font-size: .9375rem; font-weight: 600;
+    }
+    .btn-primary:hover { background: var(--prnd-accent-hover); border-color: var(--prnd-accent-hover); transform: translateY(-1px); color: #fff; }
+    .btn:active { transform: translateY(0); }
+
+    .alert { border-radius: var(--prnd-radius-sm); font-size: .8125rem; }
+
+    .text-center a { color: var(--prnd-text-muted); transition: color var(--prnd-transition); text-decoration: none; }
+    .text-center a:hover { color: var(--prnd-accent); }
+
+    center { display: block; }
+
+    .prnd-theme-toggle-fixed {
+      position: fixed; top: 1rem; right: 1rem; z-index: 100;
+      background: var(--prnd-surface); border: 1px solid var(--prnd-border);
+      border-radius: 50%; width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--prnd-text-muted); font-size: 1.125rem;
+      transition: all .2s ease; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .prnd-theme-toggle-fixed:hover { color: var(--prnd-accent); border-color: var(--prnd-accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media print {
+      body { background: #fff !important; }
+      .card { background: #fff !important; box-shadow: none !important; }
+    }
+  </style>
+</head>
+
+<script>
+function toggleTheme() {
+  var html = document.documentElement;
+  var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('prnd-theme', next);
+  updateThemeIcons(next);
+}
+function updateThemeIcons(theme) {
+  var light = document.querySelector('.prnd-theme-icon-light');
+  var dark = document.querySelector('.prnd-theme-icon-dark');
+  if (light && dark) {
+    light.style.display = theme === 'dark' ? 'none' : '';
+    dark.style.display = theme === 'dark' ? '' : 'none';
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var theme = document.documentElement.getAttribute('data-theme') || 'light';
+  updateThemeIcons(theme);
+});
+</script>
+
+<body class="d-flex flex-column">
+
+<button class="prnd-theme-toggle-fixed" onclick="toggleTheme()" aria-label="Toggle dark mode">
+  <i class="ti ti-sun-filled prnd-theme-icon-light"></i>
+  <i class="ti ti-moon-filled prnd-theme-icon-dark" style="display:none;"></i>
+</button>
+
+<div class="page page-center">
+  <div class="container container-tight py-4">
+
+    <div class="text-center mb-4">
+      <div class="prnd-brand-icon mb-3">
+        <i class="ti ti-math-function"></i>
+      </div>
+      <div class="prnd-login-title mb-1">ПРНД</div>
+      <div class="prnd-login-subtitle">
+        {% if institute_name %}{{ institute_name }}{% else %}Вход в систему{% endif %}
+      </div>
+    </div>
+
+    <div class="card card-md">
+      <div class="card-body">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

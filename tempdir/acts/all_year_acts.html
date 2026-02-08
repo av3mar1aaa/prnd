@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ act_type_name }} за {{ year }} год{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Все записи типа "{{ act_type_name }}" за {{ year }}-й год</h4>
+
+{% if act_list %}
+  <div class="table-responsive">
+    <table class="table table-vcenter card-table">
+      <thead>
+        <tr>
+          <th class="text-center">лаборатория</th>
+          <th class="text-center">сотрудник</th>
+          <th>{{ act_type_name }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for act in act_list %}
+        <tr>
+          <td class="text-center">{{ act.labname }}</td>
+          <td class="text-center">{{ act.username }}</td>
+          <td>{{ act.actname }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="prnd-empty-state">
+    <i class="ti ti-inbox"></i>
+    <p>Записей пока нет</p>
+  </div>
+{% endif %}
+{% endblock %}

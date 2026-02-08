@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Список журналов{% endblock %}
+
+{% block actions %}
+<a href="/prnd/sjournal/add_list/A/" class="btn btn-outline-primary btn-sm"><i class="ti ti-list-numbers"></i> групповое добавление в А</a>
+<a href="/prnd/sjournal/add_list/B/" class="btn btn-outline-primary btn-sm"><i class="ti ti-list-numbers"></i> групповое добавление в B</a>
+<a href="/prnd/sjournal/add_list/P/" class="btn btn-outline-primary btn-sm"><i class="ti ti-list-numbers"></i> групповое добавление издательств</a>
+{% endblock %}
+
+{% block content %}
+<h4 class="mb-3">Список журналов A:</h4>
+<div class="table-responsive mb-4">
+  <table class="table table-vcenter card-table">
+    <thead>
+      <tr>
+        <th class="w-1">ссылка</th>
+        <th>полное имя</th>
+        <th class="w-1 text-center">тип</th>
+        <th class="w-1 text-center">impact factor</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in listA %}
+      <tr>
+        <td class="text-center"><a href="{{ entry.id }}">{{ forloop.counter }}</a></td>
+        <td>{{ entry.fullname }}</td>
+        <td class="text-center">{{ entry.type }}</td>
+        <td class="text-center">{{ entry.impactfactor }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h4 class="mb-3">Список журналов B:</h4>
+<div class="table-responsive mb-4">
+  <table class="table table-vcenter card-table">
+    <thead>
+      <tr>
+        <th class="w-1">ссылка</th>
+        <th>полное имя</th>
+        <th class="w-1 text-center">тип</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in listB %}
+      <tr>
+        <td class="text-center"><a href="{{ entry.id }}">{{ forloop.counter }}</a></td>
+        <td>{{ entry.fullname }}</td>
+        <td class="text-center">{{ entry.type }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h4 class="mb-3">Список издательств:</h4>
+<div class="table-responsive">
+  <table class="table table-vcenter card-table">
+    <thead>
+      <tr>
+        <th class="w-1">ссылка</th>
+        <th>полное имя</th>
+        <th class="w-1 text-center">тип</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in listP %}
+      <tr>
+        <td class="text-center"><a href="{{ entry.id }}">{{ forloop.counter }}</a></td>
+        <td>{{ entry.fullname }}</td>
+        <td class="text-center">{{ entry.type }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

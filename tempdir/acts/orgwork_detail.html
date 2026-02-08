@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Научно-организационная работа{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">тип работы</label>
+    <div class="col-sm-6">{{ form.worktype }}</div>
+    <div class="col-sm-3">
+      {% if form.worktype.errors %}<div class="text-danger small">{{ form.worktype.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">название конференции</label>
+    <div class="col-sm-6">{{ form.name }}</div>
+    <div class="col-sm-3">
+      {% if form.name.errors %}<div class="text-danger small">{{ form.name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">место проведения</label>
+    <div class="col-sm-6">{{ form.place }}</div>
+    <div class="col-sm-3">
+      {% if form.place.errors %}<div class="text-danger small">{{ form.place.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">время проведения</label>
+    <div class="col-sm-6">{{ form.dates }}</div>
+    <div class="col-sm-3">
+      {% if form.dates.errors %}<div class="text-danger small">{{ form.dates.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год</label>
+    <div class="col-sm-6">{{ form.year }}</div>
+    <div class="col-sm-3">
+      {% if form.year.errors %}<div class="text-danger small">{{ form.year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">комментарий</label>
+    <div class="col-sm-6">{{ form.note }}</div>
+    <div class="col-sm-3">
+      {% if form.note.errors %}<div class="text-danger small">{{ form.note.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+
+<div class="alert alert-light mt-4">
+  <h5 class="alert-heading small fw-bold">Начисление баллов за научно-организационную работу</h5>
+  <p class="small mb-0">За работу в составе программных и организационных комитетов российских научных конференций устанавливается балл 0. В соответствии с требованиями инструктивного письма Президиума РАН №2-10015-7324/512 от 24.07.2007 данная деятельность исключена из методики подсчета ПРНД решением Ученого совета ПОМИ от 10.09.2007.</p>
+</div>
+{% endblock %}

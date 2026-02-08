@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Аттестационный отчет</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .info {
+      margin-bottom: 15px;
+    }
+    .section-title {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    ol {
+      margin-left: 20px;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #000;
+      margin: 20px 0;
+    }
+    .signature {
+      margin-top: 40px;
+    }
+    @media print {
+      body { font-size: 12pt; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Аттестационный отчет за {{ yearfrom }}-{{ yearto }} годы</h1>
+
+  <div class="info">
+    <strong>ФИО:</strong> {{ realname }}<br>
+    <strong>Лаборатория:</strong> {{ laboratory }}
+  </div>
+
+  <hr>
+
+  {% if typed_act_list %}
+  <ul style="list-style: none; padding-left: 0;">
+    {% for type in typed_act_list %}
+      {% if type.full_info_act_list %}
+      <li>
+        <div class="section-title">{{ type.act_type_name2 }}</div>
+        <ol>
+          {% for act in type.full_info_act_list %}
+          <li>{{ act.html_str }}</li>
+          {% endfor %}
+        </ol>
+      </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <hr>
+
+  <div class="signature">
+    Подпись: __________________________/{{ realname }}/
+  </div>
+</body>
+</html>

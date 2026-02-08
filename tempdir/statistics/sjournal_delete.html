@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление журнала{% endblock %}
+
+{% block content %}
+{% if error_message %}
+  <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+{% endif %}
+
+{% if already_deleted %}
+  <div class="alert alert-success" role="alert">Запись успешно удалена.</div>
+{% else %}
+  <div class="alert alert-warning" role="alert">
+    <h4 class="alert-title">Вы уверены, что хотите удалить "{{ name }}"?</h4>
+  </div>
+
+  {% if there_are_dependable_objects %}
+  <div class="alert alert-info mt-3" role="alert">
+    <strong>Внимание!</strong> Удаление журнала повлияет на все перечисленные ниже записи
+    (а именно, будет считаться, что журнал этих записей не принадлежит выделенному списку).
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-vcenter card-table">
+      <thead>
+        <tr>
+          <th class="w-1">#</th>
+          <th>{{ act_type_name }}</th>
+          <th class="w-1 text-center">балл</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for act in list %}
+        <tr>
+          <td><a href="{{ act.path }}">{{ forloop.counter }}</a></td>
+          <td>{{ act.html_str }}</td>
+          <td class="text-center">{{ act.cost }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <div class="d-flex gap-2 mt-4">
+    <form action="." method="post">
+      {% csrf_token %}
+      <input type="hidden" name="post" value="yes">
+      <button type="submit" class="btn btn-danger"><i class="ti ti-trash"></i> Да, удалить</button>
+    </form>
+    <form action="." method="post">
+      {% csrf_token %}
+      <input type="hidden" name="post" value="no">
+      <button type="submit" class="btn btn-secondary"><i class="ti ti-x"></i> Нет, не удалять</button>
+    </form>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Добавление журналов{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Групповое добавление журналов в список {{ list_name }}</h4>
+
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    {{ form.list }}
+    {% if form.list.errors %}<div class="text-danger small mt-1">{{ form.list.html_error_list }}</div>{% endif %}
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+{% endblock %}

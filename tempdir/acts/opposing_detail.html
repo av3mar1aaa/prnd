@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Оппонирование{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">тип оппонирования/внешнего отзыва</label>
+    <div class="col-sm-6">{{ form.opptype }}</div>
+    <div class="col-sm-3">
+      {% if form.opptype.errors %}<div class="text-danger small">{{ form.opptype.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">организация, при которой функционирует дисс. совет</label>
+    <div class="col-sm-6">{{ form.institute }}</div>
+    <div class="col-sm-3">
+      {% if form.institute.errors %}<div class="text-danger small">{{ form.institute.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">фамилия защищавшегося</label>
+    <div class="col-sm-6">{{ form.name }}</div>
+    <div class="col-sm-3">
+      {% if form.name.errors %}<div class="text-danger small">{{ form.name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">тема</label>
+    <div class="col-sm-6">{{ form.subject }}</div>
+    <div class="col-sm-3">
+      {% if form.subject.errors %}<div class="text-danger small">{{ form.subject.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год</label>
+    <div class="col-sm-6">{{ form.year }}</div>
+    <div class="col-sm-3">
+      {% if form.year.errors %}<div class="text-danger small">{{ form.year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">комментарий</label>
+    <div class="col-sm-6">{{ form.note }}</div>
+    <div class="col-sm-3">
+      {% if form.note.errors %}<div class="text-danger small">{{ form.note.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+
+<div class="alert alert-light mt-4">
+  <h5 class="alert-heading small fw-bold">Начисление баллов за оппонирование</h5>
+  <p class="small mb-0">За подготовку отзыва оппонента на кандидатскую или докторскую диссертацию начисляется 5 баллов, за подготовку отзыва ведущей организации начисляется 6 баллов (Решение Ученого Совета ПОМИ РАН, протокол №1 от 29.02.2016).</p>
+</div>
+{% endblock %}

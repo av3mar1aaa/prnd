@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Статистика пользователя{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Статистика пользователя</h4>
+
+<div class="table-responsive">
+  <table class="table table-vcenter card-table">
+    <thead>
+      <tr>
+        <th>тип записи</th>
+        <th class="text-center">кол-во</th>
+        <th class="text-center">баллы</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in stat_list %}
+      <tr>
+        <td><a href="/prnd/{{ s.act_name_eng }}/">{{ s.act_name_rus }}</a></td>
+        <td class="text-center">{{ s.num }}</td>
+        <td class="text-center">{{ s.cost }}</td>
+      </tr>
+      {% endfor %}
+      <tr class="table-active fw-bold">
+        <td>всего</td>
+        <td class="text-center">{{ total_num }}</td>
+        <td class="text-center">{{ total_cost }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

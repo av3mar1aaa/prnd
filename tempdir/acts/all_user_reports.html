@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Отчеты{% endblock %}
+
+{% block content %}
+{% if wbreport %}
+<pre class="font-monospace">
+{% if all_user_reports %}
+{% for user_report in all_user_reports %} {{ user_report.realname }} {{ user_report.total_cost }}
+{% endfor %}
+{% endif %}
+</pre>
+{% else %}
+  <h4 class="mb-4">Сводка по отчетам</h4>
+
+  <div class="table-responsive mb-4">
+    <table class="table table-vcenter card-table">
+      <thead>
+        <tr>
+          <th class="text-center">не подписано</th>
+          <th class="text-center">подписано</th>
+          <th class="text-center">одобрено</th>
+          <th class="text-center">утверждено</th>
+          <th class="text-center">всего</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">{{ not_submitted_total }}</td>
+          <td class="text-center">{{ submitted_total }}</td>
+          <td class="text-center">{{ confirmed_by_zavlab_total }}</td>
+          <td class="text-center">{{ confirmed_by_admin_total }}</td>
+          <td class="text-center">{{ status_total }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  {% if all_user_reports %}
+  <div class="table-responsive">
+    <table class="table table-vcenter card-table table-bordered">
+      <thead>
+        <tr>
+          <th>сотрудник</th>
+          {% for year in year_list %}
+          <th class="text-center">{{ year }}</th>
+          {% endfor %}
+          <th class="text-center">баллы</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user_report in all_user_reports %}
+        <tr>
+          <td>
+            <a href="/prnd/profile/{{ user_report.userid }}">{{ user_report.realname }}</a>
+            <div class="text-muted small">лаб. {{ user_report.userlab }}</div>
+          </td>
+          {% for rep in user_report.reports %}
+          <td class="align-top">
+            <div class="d-flex flex-column gap-1 small">
+              <a href="/prnd/year_reports/{{ user_report.userid }}/{{ rep.year }}/">отчет</a>
+              <span class="text-muted">{{ rep.status }}</span>
+              <strong>{{ rep.cost }}</strong>
+            </div>
+          </td>
+          {% endfor %}
+          <td class="text-center align-middle"><strong>{{ user_report.total_cost }}</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+{% endif %}
+{% endblock %}

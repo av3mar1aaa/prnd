@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Генерация отчета{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год от</label>
+    <div class="col-sm-4">{{ form.yearfrom }}</div>
+    <div class="col-sm-5">
+      {% if form.yearfrom.errors %}<div class="text-danger small">{{ form.yearfrom.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год до</label>
+    <div class="col-sm-4">{{ form.yearto }}</div>
+    <div class="col-sm-5">
+      {% if form.yearto.errors %}<div class="text-danger small">{{ form.yearto.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">версия для приказа</label>
+    <div class="col-sm-4">{{ form.wbreport }}</div>
+    <div class="col-sm-5">
+      {% if form.wbreport.errors %}<div class="text-danger small">{{ form.wbreport.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-file-export"></i> Сгенерировать</button>
+  </div>
+</form>
+{% endblock %}

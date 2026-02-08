@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Доклад{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+  {% csrf_token %}
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">тип доклада</label>
+    <div class="col-sm-6">{{ form.conftype }}</div>
+    <div class="col-sm-3">
+      {% if form.conftype.errors %}<div class="text-danger small">{{ form.conftype.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">название конференции</label>
+    <div class="col-sm-6">{{ form.name }}</div>
+    <div class="col-sm-3">
+      {% if form.name.errors %}<div class="text-danger small">{{ form.name.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">место проведения</label>
+    <div class="col-sm-6">{{ form.place }}</div>
+    <div class="col-sm-3">
+      {% if form.place.errors %}<div class="text-danger small">{{ form.place.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">время проведения</label>
+    <div class="col-sm-6">{{ form.dates }}</div>
+    <div class="col-sm-3">
+      {% if form.dates.errors %}<div class="text-danger small">{{ form.dates.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">авторы</label>
+    <div class="col-sm-6">{{ form.authors }} <span class="text-muted small">(через запятую)</span></div>
+    <div class="col-sm-3">
+      {% if form.authors.errors %}<div class="text-danger small">{{ form.authors.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">кол-во авторов</label>
+    <div class="col-sm-6">{{ form.authornum }} <span class="text-muted small">(включая Вас)</span></div>
+    <div class="col-sm-3">
+      {% if form.authornum.errors %}<div class="text-danger small">{{ form.authornum.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">название доклада</label>
+    <div class="col-sm-6">{{ form.talktitle }}</div>
+    <div class="col-sm-3">
+      {% if form.talktitle.errors %}<div class="text-danger small">{{ form.talktitle.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">год</label>
+    <div class="col-sm-6">{{ form.year }}</div>
+    <div class="col-sm-3">
+      {% if form.year.errors %}<div class="text-danger small">{{ form.year.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">комментарий</label>
+    <div class="col-sm-6">{{ form.note }}</div>
+    <div class="col-sm-3">
+      {% if form.note.errors %}<div class="text-danger small">{{ form.note.html_error_list }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Сохранить</button>
+  </div>
+</form>
+
+<div class="alert alert-light mt-4">
+  <h5 class="alert-heading small fw-bold">Начисление баллов за участие в конференциях</h5>
+  <ul class="small mb-0">
+    <li>За каждый доклад устанавливается 15 баллов.</li>
+    <li>Обязательным требованием является отбор докладов организаторами конференции.</li>
+    <li>По специальному решению комиссии наряду с докладами на российских конференциях могут учитываться доклады на заседаниях Общеинститутского семинара ПОМИ и Петербургского математического общества.</li>
+    <li>При наличии соавторов балл за доклад делится на количество авторов доклада, доли меньшие 10 процентов округляются до 10 процентов.</li>
+    <li>В отчёте пользователя за конкретный год учитывается не более 45 баллов за доклады.</li>
+  </ul>
+</div>
+{% endblock %}

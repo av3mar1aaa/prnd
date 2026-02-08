@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+*.so
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+staticfiles/
+.env
+*.sqlite3
+.DS_Store
+
+# Database with user data
+db
+
+# Backups
+backup
+backup2024/
+tempdir_bak/
+
+# Temp/dev files
+*.bak
+*.py.bak
+settings_local.py
+*.sql
+mptest.py
+add_column.py
+add_cost_to_journal.py
+update
+.claude/

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Список патентов{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">Список патентов</h4>
+
+{% if act_list %}
+  <div class="table-responsive">
+    <table class="table table-vcenter card-table">
+      <thead>
+        <tr>
+          <th class="w-1">номер</th>
+          <th>патент</th>
+          <th class="w-1 text-center">балл</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for act in act_list %}
+        <tr>
+          <td class="text-center"><a href="{{ act.id }}">{{ forloop.counter }}</a></td>
+          <td>
+            {{ act.authors }}. <em>{{ act.name }}.</em> {{ act.year }} г.
+            {% if act.note %} ({{ act.note }}) {% endif %}
+          </td>
+          <td class="text-center">
+            {% for cost in cost_list %}
+              {% if forloop.counter == forloop.parentloop.counter %}
+                {{ cost }}
+              {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="prnd-empty-state">
+    <i class="ti ti-license"></i>
+    <p>Вы пока не добавили ни одного патента</p>
+  </div>
+{% endif %}
+{% endblock %}

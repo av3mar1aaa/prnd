@@ -1,0 +1,763 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <script>
+    // Apply saved theme immediately to prevent FOUC
+    (function(){
+      var t = localStorage.getItem('prnd-theme');
+      if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+      if (t) document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ПРНД</title>
+
+  <!-- Tabler (Bootstrap-based UI) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js" defer></script>
+
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --prnd-accent: #6366f1;
+      --prnd-accent-hover: #4f46e5;
+      --prnd-accent-light: rgba(99,102,241,.07);
+      --prnd-radius: 16px;
+      --prnd-radius-sm: 12px;
+      --prnd-radius-lg: 20px;
+      --prnd-shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --prnd-shadow: 0 4px 12px rgba(0,0,0,.06);
+      --prnd-shadow-lg: 0 8px 24px rgba(0,0,0,.08);
+      --prnd-transition: .2s ease;
+      --prnd-focus-ring: 0 0 0 3px rgba(99,102,241,.2);
+      --prnd-bg: #f4f5fa;
+      --prnd-bg-warm: #eef0f8;
+      --prnd-surface: #ffffff;
+      --prnd-surface-translucent: rgba(255,255,255,.8);
+      --prnd-border: #e5e7eb;
+      --prnd-text: #1f2937;
+      --prnd-text-muted: #6b7280;
+    }
+
+    [data-theme="dark"] {
+      --prnd-bg: #111318;
+      --prnd-bg-warm: #13151f;
+      --prnd-surface: #1a1d27;
+      --prnd-surface-translucent: rgba(26,29,39,.85);
+      --prnd-border: #2d3140;
+      --prnd-text: #e5e7eb;
+      --prnd-text-muted: #9ca3af;
+      --prnd-accent-light: rgba(99,102,241,.12);
+      --prnd-shadow-sm: 0 1px 3px rgba(0,0,0,.2);
+      --prnd-shadow: 0 4px 12px rgba(0,0,0,.2);
+      --prnd-shadow-lg: 0 8px 24px rgba(0,0,0,.3);
+    }
+
+    font { color: inherit !important; font-size: inherit !important; }
+
+    /* 1. Top accent stripe */
+    body::before {
+      content: '';
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--prnd-accent);
+      z-index: 9999;
+    }
+
+    /* 6. Dot pattern background */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, var(--prnd-accent) .5px, transparent .5px);
+      background-size: 24px 24px;
+      opacity: .035;
+      pointer-events: none;
+      z-index: 0;
+    }
+    [data-theme="dark"] body::after { opacity: .04; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      /* 5. Subtle static gradient */
+      background: linear-gradient(160deg, var(--prnd-bg) 0%, var(--prnd-bg-warm) 100%);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+      color: var(--prnd-text);
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--prnd-surface);
+      border: 1px solid var(--prnd-border);
+      border-left: 3px solid var(--prnd-accent);
+      border-radius: var(--prnd-radius-lg);
+      box-shadow: var(--prnd-shadow-sm);
+      transition: all var(--prnd-transition);
+    }
+    .card:hover { box-shadow: 0 8px 24px -4px rgba(99,102,241,.15); transform: translateY(-2px); }
+    .card-header {
+      background: transparent;
+      border-bottom: 1px solid var(--prnd-border);
+      padding: 1.25rem 1.5rem;
+    }
+    .card-body { padding: 1.5rem; }
+    .card-title { font-weight: 600; font-size: 1rem; letter-spacing: -.01em; color: var(--prnd-accent); }
+
+    /* ── Buttons ── */
+    .btn {
+      border-radius: var(--prnd-radius-sm);
+      font-weight: 500; font-size: .8125rem;
+      letter-spacing: .01em; padding: .625rem 1.25rem;
+      transition: all var(--prnd-transition);
+      display: inline-flex; align-items: center; gap: .375rem;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: var(--prnd-shadow-sm); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary { background: var(--prnd-accent); border-color: var(--prnd-accent); color: #fff; }
+    .btn-primary:hover { background: var(--prnd-accent-hover); border-color: var(--prnd-accent-hover); color: #fff; }
+    .btn-outline-primary { border: 1.5px solid var(--prnd-accent); color: var(--prnd-accent); background: transparent; }
+    .btn-outline-primary:hover { background: var(--prnd-accent-light); color: var(--prnd-accent); }
+    .btn-outline-secondary { border: 1.5px solid var(--prnd-border); color: var(--prnd-text-muted); }
+    .btn-outline-secondary:hover { background: var(--prnd-accent-light); border-color: var(--prnd-accent); color: var(--prnd-accent); }
+    .btn-outline-danger { border: 1.5px solid #f87171; color: #ef4444; }
+    .btn-outline-danger:hover { background: rgba(239,68,68,.06); color: #dc2626; }
+    .btn-ghost { background: transparent; border-color: transparent; color: var(--prnd-text-muted); }
+    .btn-ghost:hover { background: var(--prnd-accent-light); color: var(--prnd-accent); }
+
+    input[type="submit"], input[type="button"] {
+      background: var(--prnd-accent); border: none; color: #fff;
+      padding: .625rem 1.25rem; border-radius: var(--prnd-radius-sm);
+      font-size: .8125rem; line-height: 1.2; cursor: pointer;
+      transition: all var(--prnd-transition);
+    }
+    input[type="submit"]:hover, input[type="button"]:hover { background: var(--prnd-accent-hover); transform: translateY(-1px); }
+    input[type="submit"]:focus, input[type="button"]:focus { outline: none; box-shadow: var(--prnd-focus-ring); }
+    input[type="submit"].btn-secondary, input[type="button"].btn-secondary {
+      background: var(--prnd-surface); color: var(--prnd-text); border: 1px solid var(--prnd-border);
+    }
+
+    /* ── Tables ── */
+    .table { --tblr-table-border-color: var(--prnd-border); font-size: .8125rem; }
+    .table thead th {
+      font-weight: 600; font-size: .75rem; text-transform: uppercase;
+      letter-spacing: .04em; color: var(--prnd-accent);
+      background: var(--prnd-accent-light);
+      border-bottom: 2px solid var(--prnd-border);
+      padding: .75rem .875rem; white-space: nowrap;
+    }
+    .table tbody td { padding: .75rem .875rem; vertical-align: middle; }
+    .table tbody tr { transition: background var(--prnd-transition); }
+    .table tbody tr:hover { background: var(--prnd-accent-light); }
+    .table-active td { background: rgba(99,102,241,.1) !important; font-weight: 600; }
+    .table td a:not(.btn) { color: var(--prnd-accent); font-weight: 500; text-decoration: none; }
+    .table td a:not(.btn):hover { color: var(--prnd-accent-hover); text-decoration: underline; }
+
+    /* ── Forms ── */
+    input[type="text"], input[type="password"], input[type="email"],
+    input[type="number"], input[type="url"], input[type="date"],
+    textarea, select {
+      display: block; width: 100%; padding: .75rem 1rem;
+      font-size: .875rem; line-height: 1.5;
+      color: var(--prnd-text); background: var(--prnd-surface);
+      border: 1.5px solid var(--prnd-border);
+      border-radius: var(--prnd-radius-sm);
+      transition: all var(--prnd-transition);
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--prnd-accent); box-shadow: var(--prnd-focus-ring); outline: none;
+    }
+    textarea { min-height: 6rem; }
+    .col-form-label { font-weight: 500; font-size: .875rem; color: var(--prnd-text-muted); }
+    form .mb-3.row { padding: .625rem 0; border-bottom: 1px solid var(--prnd-border); }
+    form .mb-3.row:last-of-type { border-bottom: none; }
+
+    /* ── Sidebar ── */
+    .navbar-vertical {
+      /* 8. Blur effect */
+      background: var(--prnd-surface-translucent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid var(--prnd-border);
+    }
+    .navbar-vertical .nav-link {
+      border-radius: var(--prnd-radius-sm); margin: 2px 8px;
+      padding: .5rem .875rem; font-size: .8125rem; font-weight: 450;
+      transition: all var(--prnd-transition); color: var(--prnd-text-muted);
+      display: flex; align-items: center; gap: .5rem;
+      position: relative;
+    }
+    .navbar-vertical .nav-link:hover { background: var(--prnd-accent-light); color: var(--prnd-accent); transform: translateX(2px); }
+    /* 4. Vertical active indicator */
+    .navbar-vertical .nav-link.active {
+      background: var(--prnd-accent-light); color: var(--prnd-accent); font-weight: 600;
+    }
+    .navbar-vertical .nav-link.active::before {
+      content: '';
+      position: absolute; left: -8px; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 60%; border-radius: 2px;
+      background: var(--prnd-accent);
+    }
+    .navbar-vertical .nav-link-title { font-weight: 600; font-size: .8125rem; }
+    /* 7. Colored icon backgrounds */
+    .navbar-vertical .nav-link .ti {
+      font-size: 1rem; width: 1.75rem; height: 1.75rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; border-radius: 8px;
+      background: var(--prnd-accent-light); color: var(--prnd-text-muted);
+      transition: all var(--prnd-transition);
+    }
+    .navbar-vertical .nav-link.active .ti,
+    .navbar-vertical .nav-link:hover .ti { background: var(--prnd-accent); color: #fff; }
+
+    /* ── Page Header ── */
+    .page-header { padding: 1.25rem 0; }
+    .page-title { font-weight: 700; font-size: 1.375rem; letter-spacing: -.02em; color: var(--prnd-accent); }
+    .page-wrapper { position: relative; z-index: 1; }
+
+    /* ── Top Navbar ── */
+    .navbar.navbar-expand-md {
+      /* 8. Blur effect */
+      background: var(--prnd-surface-translucent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--prnd-border);
+    }
+    .dropdown-menu {
+      background: var(--prnd-surface-translucent);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--prnd-border);
+      border-radius: var(--prnd-radius-sm); box-shadow: var(--prnd-shadow-lg);
+    }
+    .dropdown-item { border-radius: 8px; margin: 2px 4px; transition: all var(--prnd-transition); }
+    .dropdown-item:hover { background: var(--prnd-accent-light); color: var(--prnd-accent); }
+
+    /* ── Alerts ── */
+    .alert { border-radius: var(--prnd-radius-sm); font-size: .8125rem; }
+    .alert-light { background: var(--prnd-surface); border: 1px solid var(--prnd-border); }
+    .alert-success { background: rgba(34,197,94,.06); border: 1px solid rgba(34,197,94,.2); color: #166534; }
+    .alert-warning { background: rgba(234,179,8,.06); border: 1px solid rgba(234,179,8,.2); color: #854d0e; }
+    .alert-danger { background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.2); color: #991b1b; }
+    .alert-info { background: rgba(99,102,241,.06); border: 1px solid rgba(99,102,241,.15); color: #3730a3; }
+    [data-theme="dark"] .alert-success { color: #86efac; }
+    [data-theme="dark"] .alert-warning { color: #fde68a; }
+    [data-theme="dark"] .alert-danger { color: #fca5a5; }
+    [data-theme="dark"] .alert-info { color: #a5b4fc; }
+
+    /* ── List Groups ── */
+    .list-group-item-action {
+      font-size: .8125rem; padding: .75rem 1.125rem;
+      transition: all var(--prnd-transition); border-color: var(--prnd-border);
+    }
+    .list-group-item-action:hover { background: var(--prnd-accent-light); color: var(--prnd-accent); transform: translateX(2px); }
+    .list-group-item .badge {
+      font-size: .6875rem; font-weight: 500; border-radius: 9999px; padding: .2rem .5rem;
+      background: var(--prnd-accent); color: #fff;
+    }
+
+    /* ── Accordion ── */
+    .accordion-item { border: 1px solid var(--prnd-border); border-radius: var(--prnd-radius-sm) !important; margin-bottom: .5rem; background: transparent; }
+    .accordion-button { font-weight: 500; font-size: .875rem; border-radius: var(--prnd-radius-sm) !important; background: var(--prnd-surface); transition: all var(--prnd-transition); }
+    .accordion-button:not(.collapsed) { background: var(--prnd-accent-light); color: var(--prnd-accent); box-shadow: none; }
+    .accordion-body { font-size: .8125rem; }
+    [data-theme="dark"] .accordion-button { background: var(--prnd-surface); color: var(--prnd-text); }
+    [data-theme="dark"] .accordion-button:not(.collapsed) { background: var(--prnd-accent-light); color: #a5b4fc; }
+    [data-theme="dark"] .accordion-body { color: var(--prnd-text-muted); }
+
+    /* ── Empty States ── */
+    .prnd-empty-state { text-align: center; padding: 3rem 1rem; color: var(--prnd-text-muted); }
+    .prnd-empty-state .ti { font-size: 3rem; margin-bottom: 1rem; display: block; opacity: .35; color: var(--prnd-accent); }
+    .prnd-empty-state p { font-size: .875rem; margin: 0; }
+
+    /* ── Scrollbar ── */
+    .table-responsive::-webkit-scrollbar { height: 6px; }
+    .table-responsive::-webkit-scrollbar-track { background: var(--prnd-accent-light); border-radius: 3px; }
+    .table-responsive::-webkit-scrollbar-thumb { background: var(--prnd-accent); border-radius: 3px; opacity: .5; }
+
+    /* Accent line */
+    .prnd-accent-bar { height: 2px; background: var(--prnd-accent); border-radius: 1px; }
+
+    center { display: block; }
+
+    /* ── Fade-in animations ── */
+    @keyframes prnd-fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .page-body { animation: prnd-fade-in .4s ease-out; }
+    .page-body .card { animation: prnd-fade-in .5s ease-out; animation-fill-mode: both; }
+    .page-body .card:nth-child(2) { animation-delay: .1s; }
+    .page-body .card:nth-child(3) { animation-delay: .2s; }
+
+    /* ── Floating formulas ── */
+    @keyframes prnd-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: .03; }
+      50%      { transform: translateY(-20px) rotate(10deg); opacity: .06; }
+    }
+    .prnd-floating-formulas { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .prnd-floating-formulas span {
+      position: absolute; font-size: clamp(2rem, 5vw, 4rem);
+      color: var(--prnd-accent); opacity: .04;
+      animation: prnd-float 8s ease-in-out infinite;
+      font-family: 'Times New Roman', serif;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media print {
+      body { background: #fff !important; }
+      .card { background: #fff !important; box-shadow: none !important; }
+      .prnd-floating-formulas { display: none !important; }
+    }
+
+    .prnd-theme-toggle { padding: .375rem; font-size: 1.125rem; }
+
+    /* Legacy tables */
+    table.wraptable { width: 100%; border-collapse: separate; border-spacing: 0; margin: 0 0 .75rem 0; }
+    table.wraptable th {
+      text-align: left; padding: .75rem 1rem;
+      background: var(--prnd-surface); border: 1px solid var(--prnd-border);
+      border-radius: var(--prnd-radius-sm); font-weight: 600;
+    }
+
+    table.profiletable, table.yearstatisticstable, table.commonform, table.listtable {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      background: var(--prnd-surface); border: 1px solid var(--prnd-border);
+      border-radius: var(--prnd-radius-sm); overflow: hidden; margin-bottom: 1rem;
+    }
+    table.profiletable th, table.yearstatisticstable th, table.commonform th, table.listtable th {
+      background: var(--prnd-accent-light); font-weight: 600;
+      padding: .6rem .75rem; border-bottom: 1px solid var(--prnd-border);
+    }
+    table.profiletable td, table.yearstatisticstable td, table.commonform td, table.listtable td {
+      padding: .55rem .75rem; border-bottom: 1px solid var(--prnd-border); vertical-align: top;
+    }
+    table.profiletable tr:last-child td, table.yearstatisticstable tr:last-child td,
+    table.commonform tr:last-child td, table.listtable tr:last-child td { border-bottom: 0; }
+
+    .page-full-statistics table { width: 100%; border-collapse: collapse; background: var(--prnd-surface); }
+    .page-full-statistics th, .page-full-statistics td {
+      border: 1px solid var(--prnd-border); padding: .5rem .75rem; vertical-align: top;
+    }
+    .page-full-statistics tr:nth-child(even) td,
+    .page-full-statistics tr:nth-child(even) th { background: var(--prnd-accent-light); }
+    .page-full-statistics .card-body { overflow-x: auto; }
+    .page-full-statistics table { min-width: 100%; width: max-content; }
+
+    .prnd-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--prnd-accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    .prnd-app-title { letter-spacing: .02em; color: var(--prnd-accent); font-size: 1.1rem; }
+
+    [data-theme="dark"] .text-muted { color: var(--prnd-text-muted) !important; }
+    [data-theme="dark"] .page-wrapper { color: var(--prnd-text); }
+    [data-theme="dark"] .dropdown-item { color: var(--prnd-text-muted); }
+    [data-theme="dark"] .dropdown-item:hover { background: var(--prnd-accent-light); color: #a5b4fc; }
+  </style>
+</head>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const normalize = (p) => (p || "/").replace(/\/+$/, "/");
+  const path = normalize(window.location.pathname);
+
+  // 1) Автоматически ставим active на пункт меню по текущему URL
+  document.querySelectorAll('.navbar-vertical .nav-link[href^="/"]').forEach(a => {
+    const hrefRaw = a.getAttribute("href");
+    if (!hrefRaw) return;
+    const href = normalize(hrefRaw);
+
+    if (href === "/prnd/") {
+      if (path === href) a.classList.add("active");
+      return;
+    }
+
+    if (path === href || path.startsWith(href)) {
+      a.classList.add("active");
+    }
+  });
+
+  // 2) Раскрываем все родительские collapse у активного пункта
+  const openCollapse = (el) => {
+    el.classList.add("show");
+    const id = el.id;
+    if (id) {
+      const toggler = document.querySelector(
+        `.navbar-vertical [data-bs-toggle="collapse"][href="#${id}"],` +
+        `.navbar-vertical [data-bs-toggle="collapse"][data-bs-target="#${id}"]`
+      );
+      if (toggler) toggler.setAttribute("aria-expanded", "true");
+    }
+
+    if (window.bootstrap && window.bootstrap.Collapse) {
+      window.bootstrap.Collapse.getOrCreateInstance(el, { toggle: false }).show();
+    }
+  };
+
+  document.querySelectorAll('.navbar-vertical .nav-link.active').forEach(active => {
+    let c = active.closest(".collapse");
+    while (c) {
+      openCollapse(c);
+      c = c.parentElement ? c.parentElement.closest(".collapse") : null;
+    }
+  });
+  // 3) Theme toggle
+  var theme = document.documentElement.getAttribute('data-theme') || 'light';
+  updateThemeIcons(theme);
+});
+
+function toggleTheme() {
+  var html = document.documentElement;
+  var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('prnd-theme', next);
+  updateThemeIcons(next);
+}
+
+function updateThemeIcons(theme) {
+  var light = document.querySelector('.prnd-theme-icon-light');
+  var dark = document.querySelector('.prnd-theme-icon-dark');
+  if (light && dark) {
+    light.style.display = theme === 'dark' ? 'none' : '';
+    dark.style.display = theme === 'dark' ? '' : 'none';
+  }
+}
+</script>
+
+<body class="{% if request.path == '/prnd/full_statistics/' %}page-full-statistics{% endif %}">
+
+<div class="prnd-floating-formulas" aria-hidden="true">
+  <span style="top:10%;left:5%;animation-delay:0s;">&#8721;</span>
+  <span style="top:20%;left:85%;animation-delay:2s;">&#8747;</span>
+  <span style="top:45%;left:15%;animation-delay:4s;">&#960;</span>
+  <span style="top:70%;left:90%;animation-delay:1s;">&#8706;</span>
+  <span style="top:80%;left:40%;animation-delay:3s;">&#8711;</span>
+  <span style="top:30%;left:60%;animation-delay:5s;">&#955;</span>
+  <span style="top:60%;left:75%;animation-delay:2.5s;">&#931;</span>
+  <span style="top:15%;left:45%;animation-delay:6s;">&#8734;</span>
+</div>
+
+{% if wbreport %}
+
+  <div class="page">
+    <div class="page-wrapper">
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="card">
+            <div class="card-body">
+
+{% else %}
+
+  <div class="page">
+
+    {% if not unlog %}
+    <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <h1 class="navbar-brand navbar-brand-autodark">
+          <a href="/prnd/" class="text-decoration-none d-flex align-items-center gap-2">
+            <span class="d-flex align-items-center justify-content-center rounded" style="width:32px;height:32px;background:var(--prnd-accent);color:#fff;font-size:.875rem;">
+              <i class="ti ti-math-function"></i>
+            </span>
+            <span class="prnd-app-title fw-bold">ПРНД</span>
+          </a>
+        </h1>
+
+        <div class="collapse navbar-collapse" id="sidebar-menu">
+          <div class="prnd-accent-bar my-2"></div>
+          <ul class="navbar-nav pt-lg-3">
+
+            <li class="nav-item">
+              <a class="nav-link" href="/prnd/profile/"><i class="ti ti-user-circle"></i> Учетная запись</a>
+            </li>
+
+
+            {% if is_laboratory or is_institute %}
+              <li class="nav-item mt-2">
+                <div class="alert alert-info mb-0" role="alert">
+                  <i class="ti ti-info-circle"></i> Вы находитесь в режиме web отчета.
+                  <br>
+                  Для заполнения данных используйте страницу
+                  <a href="https://www.pdmi.ras.ru/prnd/" class="alert-link">https://www.pdmi.ras.ru/prnd/</a>
+                </div>
+              </li>
+            {% else %}
+
+              <li class="nav-item mt-2">
+                <a class="nav-link" data-bs-toggle="collapse" href="#nav-main" role="button"
+                   aria-expanded="true" aria-controls="nav-main">
+                  <i class="ti ti-layout-dashboard"></i>
+                  <span class="nav-link-title">Основное меню</span>
+                </a>
+                <div class="collapse show" id="nav-main">
+                  <ul class="nav flex-column ms-3">
+                    <li class="nav-item"><a class="nav-link" href="/prnd/profile/"><i class="ti ti-user-circle"></i> Учетная запись</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/user_reports/"><i class="ti ti-file-text"></i> Отчеты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/cur_user_attestation/"><i class="ti ti-certificate"></i> Аттестация</a></li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" data-bs-toggle="collapse" href="#nav-years" role="button"
+                         aria-expanded="false" aria-controls="nav-years">
+                        <i class="ti ti-calendar"></i> Годы
+                      </a>
+                      <div class="collapse" id="nav-years">
+                        <ul class="nav flex-column ms-3">
+                          {% for y in report_years %}
+                            <li class="nav-item">
+                              <a class="nav-link {% if y == year %}active{% endif %}" href="/prnd/cur_user_year_report/{{ y }}/">{{ y }}</a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="nav-item mt-2">
+                <a class="nav-link" data-bs-toggle="collapse" href="#nav-science" role="button"
+                   aria-expanded="false" aria-controls="nav-science">
+                  <i class="ti ti-microscope"></i>
+                  <span class="nav-link-title">Научная деятельность</span>
+                </a>
+                <div class="collapse" id="nav-science">
+                  <ul class="nav flex-column ms-3">
+                    <li class="nav-item"><a class="nav-link" href="/prnd/publications/"><i class="ti ti-article"></i> Публикации</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/monographs/"><i class="ti ti-book"></i> Монографии</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/conferences/"><i class="ti ti-presentation"></i> Доклады</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/courses/"><i class="ti ti-school"></i> Курсы лекций и семинары</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/patents/"><i class="ti ti-license"></i> Патенты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/supervising/"><i class="ti ti-users-group"></i> Научное руководство</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/editing/"><i class="ti ti-edit"></i> Редактирование научных изданий</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/editingcollegium/"><i class="ti ti-clipboard-text"></i> Работа в составе ред. коллегий</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/orgwork/"><i class="ti ti-building"></i> Научно-орг. работа</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/opposing/"><i class="ti ti-scale"></i> Оппонирование</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/grants/"><i class="ti ti-cash"></i> Гранты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/prnd/awards/"><i class="ti ti-award"></i> Награды</a></li>
+                  </ul>
+                </div>
+              </li>
+
+              {% if is_zavlab %}
+                <li class="nav-item mt-2">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#nav-lab" role="button"
+                     aria-expanded="false" aria-controls="nav-lab">
+                    <i class="ti ti-flask"></i>
+                    <span class="nav-link-title">Лаборатория</span>
+                  </a>
+                  <div class="collapse" id="nav-lab">
+                    <ul class="nav flex-column ms-3">
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#nav-lab-years" role="button"
+                           aria-expanded="false" aria-controls="nav-lab-years">
+                          <i class="ti ti-calendar"></i> Отчеты по годам
+                        </a>
+                        <div class="collapse" id="nav-lab-years">
+                          <ul class="nav flex-column ms-3">
+                            {% for y in report_years %}
+                              <li class="nav-item">
+                                <a class="nav-link" href="/prnd/laboratory/{{ request.user.id }}/{{ y }}/">Отчеты за {{ y }}</a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              {% endif %}
+
+              {% if not is_laboratory and not is_institute %}
+                <li class="nav-item mt-2">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#nav-stats" role="button"
+                     aria-expanded="false" aria-controls="nav-stats">
+                    <i class="ti ti-chart-bar"></i>
+                    <span class="nav-link-title">Статистика</span>
+                  </a>
+                  <div class="collapse" id="nav-stats">
+                    <ul class="nav flex-column ms-3">
+                      <li class="nav-item"><a class="nav-link" href="/prnd/full_statistics/"><i class="ti ti-calculator"></i> Коэффициенты</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/prnd/all_user_reports/"><i class="ti ti-trophy"></i> Рейтинги</a></li>
+                    </ul>
+                  </div>
+                </li>
+              {% endif %}
+
+              {% if is_admin %}
+                <li class="nav-item mt-2">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#nav-admin" role="button"
+                     aria-expanded="false" aria-controls="nav-admin">
+                    <i class="ti ti-settings"></i>
+                    <span class="nav-link-title">Администрирование</span>
+                  </a>
+                  <div class="collapse" id="nav-admin">
+                    <ul class="nav flex-column ms-3">
+                      <li class="nav-item"><a class="nav-link" href="/prnd/admin/"><i class="ti ti-shield-lock"></i> Админка</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/prnd/register/"><i class="ti ti-user-plus"></i> Регистрация пользователя</a></li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li class="nav-item mt-2">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#nav-ref" role="button"
+                     aria-expanded="false" aria-controls="nav-ref">
+                    <i class="ti ti-books"></i>
+                    <span class="nav-link-title">Справочники</span>
+                  </a>
+                  <div class="collapse" id="nav-ref">
+                    <ul class="nav flex-column ms-3">
+                      <li class="nav-item"><a class="nav-link" href="/prnd/sjournal/"><i class="ti ti-list-check"></i> Список A/B</a></li>
+                      <li class="nav-item"><span class="nav-link text-muted" style="cursor:not-allowed;"><i class="ti ti-lock"></i> Стоимость</span></li>
+                    </ul>
+                  </div>
+                </li>
+              {% endif %}
+
+            {% endif %}
+
+            <li class="nav-item mt-3">
+              <div class="nav-link disabled" aria-disabled="true" style="opacity:1;">
+                <span class="nav-link-title text-uppercase text-muted" style="font-size:.75rem; letter-spacing:.04em;">Сеанс</span>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/prnd/logout/"><i class="ti ti-logout"></i> Выйти</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </aside>
+    {% endif %}
+
+    <div class="page-wrapper">
+
+      {% if not unlog %}
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="nav-item d-flex align-items-center me-2">
+              <button class="btn btn-ghost prnd-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <i class="ti ti-sun-filled prnd-theme-icon-light"></i>
+                <i class="ti ti-moon-filled prnd-theme-icon-dark" style="display:none;"></i>
+              </button>
+            </div>
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link d-flex lh-1 text-reset p-0 align-items-center gap-2" data-bs-toggle="dropdown" aria-label="Open user menu">
+                <span class="prnd-avatar">
+                  <i class="ti ti-user"></i>
+                </span>
+                <div class="d-none d-xl-block ps-1">
+                  <div class="fw-medium" style="font-size:.8125rem;">{{ user.username }}</div>
+                  <div class="mt-1 small text-muted">{{ owner_username }}</div>
+                </div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <a class="dropdown-item" href="/prnd/profile/"><i class="ti ti-user-circle me-2"></i> Профиль</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/prnd/logout/"><i class="ti ti-logout me-2"></i> Выйти</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="navbar-nav">
+            <div class="nav-item">
+              <span class="nav-link">{{ institute_name }}</span>
+            </div>
+          </div>
+        </div>
+      </header>
+      {% endif %}
+
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <h2 class="page-title">{% block title %}{% endblock %}</h2>
+              {% if message %}
+                <div class="text-muted mt-1">{{ message }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-auto ms-auto d-print-none">
+              <div class="btn-list">
+                {% block actions %}{% endblock %}
+
+                {% if new_action %}
+                  <a class="btn btn-primary" href="{{ new_path }}"><i class="ti ti-plus"></i> {{ new_action }}</a>
+                {% endif %}
+                {% if delete_action %}
+                  <a class="btn btn-outline-danger" href="{{ delete_path }}"><i class="ti ti-trash"></i> {{ delete_action }}</a>
+                {% endif %}
+                {% if list_action %}
+                  <a class="btn btn-outline-secondary" href="{{ list_path }}"><i class="ti ti-arrow-left"></i> {{ list_action }}</a>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="page-body">
+        <div class="container-xl">
+
+          {% if not unlog and owner_message %}
+            <div class="alert alert-success" role="alert"><i class="ti ti-check me-2"></i>{{ owner_message }}</div>
+          {% endif %}
+
+          {% if not unlog and user_message %}
+            <div class="alert alert-warning" role="alert"><i class="ti ti-alert-triangle me-2"></i>{{ user_message }}</div>
+          {% endif %}
+
+          <div class="card">
+            <div class="card-body">
+
+{% endif %}
+
+{# === single content block for all layouts === #}
+{% block content %}{% endblock %}
+
+{% if wbreport %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% else %}
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endif %}
+
+</body>
+</html>
