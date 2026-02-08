@@ -6,7 +6,6 @@
     // Apply saved theme immediately to prevent FOUC
     (function(){
       var t = localStorage.getItem('prnd-theme');
-      if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
       if (t) document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
